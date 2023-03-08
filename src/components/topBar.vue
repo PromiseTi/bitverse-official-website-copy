@@ -153,7 +153,7 @@ export default {
   mounted() {},
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 @media screen and (max-width: 900px) {
   .mob_Head {
     padding: 0px 10px;
@@ -245,9 +245,9 @@ export default {
   width: calc(100vw - 6px);
   height: 76px;
   z-index: 10000;
-}
-.topBar > div {
-  height: 100%;
+  > div {
+    height: 100%;
+  }
 }
 .logo {
   height: 46px;

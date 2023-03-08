@@ -19,6 +19,7 @@ Vue.use(ElementUI)
 Vue.prototype.$alert = alert
 Vue.config.productionTip = false
 import './style/public.css'
+import './style/modify.scss'
 import './plugins'
 
 var vue = new Vue({

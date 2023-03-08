@@ -1,7 +1,14 @@
 <template>
   <div id="app">
     <div class="content" @scroll="handleScroll" ref="content">
-      <TopBar :colos="colos" v-if="$route.name != 'protocol'" />
+      <TopBar
+        v-if="
+          !['login', 'forgot', 'reset', 'signup', 'verify'].includes(
+            $route.name
+          )
+        "
+        :colos="colos"
+      />
       <router-view />
     </div>
   </div>

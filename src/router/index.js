@@ -35,6 +35,36 @@ const routes = [
     name: 'protocol',
     component: () => import('../views/protocol.vue'),
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login/index.vue'),
+  },
+  {
+    path: '/forgot',
+    name: 'forgot',
+    component: () => import('../views/login/forgot.vue'),
+  },
+  {
+    path: '/reset',
+    name: 'reset',
+    component: () => import('../views/login/reset.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import('../views/login/signup.vue'),
+  },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: () => import('../views/login/verify.vue'),
+  },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: () => import('../views/login/verify.vue'),
+  },
 ]
 
 const router = new VueRouter({

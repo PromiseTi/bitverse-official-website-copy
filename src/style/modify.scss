@@ -1,0 +1,32 @@
+.trans{
+  input{
+    background-color: transparent;
+    color: #ffffff;
+  }
+  button{
+    background-color: transparent;
+    color: #ffffff;
+    // border: 0.5px solid #ffffff;
+    width: 100%;
+    padding: 16px 24px;
+  }
+  button:hover,button:focus,button:active{
+    background: transparent;
+    border-color: #ffffff;
+    color: #FFF;
+  }
+  button.is-loading:before{
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+  }
+}
+.blcks {
+  position: absolute;
+  right: -170px;
+  bottom: 0px;
+  cursor: pointer;
+  width: 148px;
+  text-align: left;
+}

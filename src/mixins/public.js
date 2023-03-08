@@ -1,3 +1,4 @@
+import waves from '@/directive/waves/index.js'
 export default {
   data() {
     return {
@@ -84,7 +85,22 @@ export default {
         window.alertIsShow = true
       }
     },
+    succesIng() {
+      // this.$message.success('Verification code sent successfully')
+      this.isDisable = true
+      this.timer = setInterval(() => {
+        this.countdown--
+        if (this.countdown <= 0) {
+          clearInterval(this.timer)
+          this.isDisable = false
+          this.countdown = 90
+        }
+      }, 1000)
+    },
   },
   created() {},
   mounted() {},
+  directives: {
+    waves,
+  },
 }

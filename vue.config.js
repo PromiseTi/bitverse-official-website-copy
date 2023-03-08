@@ -19,13 +19,13 @@ module.exports = {
       },
     },
   },
-  css: {
-    loaderOptions: {
-      sass: {
-        data: '@import "@/styles/variables.scss";',
-      },
-    },
-  },
+  // css: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data: '@import "@/styles/variables.scss";',
+  //     },
+  //   },
+  // },
   chainWebpack(config) {
     // set svg-sprite-loader
     config.module.rule('svg').exclude.add(resolve('src/icons')).end()
