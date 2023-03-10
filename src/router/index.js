@@ -65,6 +65,26 @@ const routes = [
     name: 'verify',
     component: () => import('../views/login/verify.vue'),
   },
+  {
+    path: '/mall',
+    name: 'mall',
+    component: () => import('../views/mall/mall.vue'),
+  },
+  {
+    path: '/mallDetail',
+    name: 'mallDetail',
+    component: () => import('../views/mall/mallDetail.vue'),
+  },
+  {
+    path: '/pay',
+    name: 'pay',
+    component: () => import('../views/mall/pay.vue'),
+  },
+  {
+    path: '/payVerify',
+    name: 'payVerify',
+    component: () => import('../views/mall/payVerify.vue'),
+  },
 ]
 
 const router = new VueRouter({

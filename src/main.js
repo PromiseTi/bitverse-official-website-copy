@@ -12,6 +12,7 @@ import alert from './components/alert'
 import publicMixins from './mixins/public'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+
 Vue.use(VueAwesomeSwiper)
 Vue.mixin(publicMixins)
 Vue.use(vueClipboard)
