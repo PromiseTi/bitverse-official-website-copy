@@ -38,6 +38,9 @@
                 {{ item.a }}
               </div>
             </div>
+
+            <el-button round type="small" @click="goRegister">Sign up</el-button>
+            <el-button round type="small" @click="goLogin">Sign in</el-button>
           </div>
         </div>
       </div>
@@ -89,7 +92,7 @@
 
 <script>
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {
     // eslint-disable-next-line vue/require-prop-type-constructor
@@ -103,55 +106,63 @@ export default {
       isFlag: false,
       arrs: [
         {
-          href: 'https://twitter.com/Bitversepro',
-          img: require('../assets/aboutUs/icon1.png'),
+          href: "https://twitter.com/Bitversepro",
+          img: require("../assets/aboutUs/icon1.png"),
         },
         {
-          href: 'https://t.me/bitverse_com',
-          img: require('../assets/aboutUs/icon2.png'),
+          href: "https://t.me/bitverse_com",
+          img: require("../assets/aboutUs/icon2.png"),
         },
         {
-          href: 'https://medium.com/@Bitversepro',
-          img: require('../assets/aboutUs/icon3.png'),
+          href: "https://medium.com/@Bitversepro",
+          img: require("../assets/aboutUs/icon3.png"),
         },
       ],
       list: [
-        { a: 'Home', name: 'index' },
-        { a: 'About us', name: 'aboutUs' },
-        { a: 'Download', name: 'Download' },
+        { a: "Home", name: "index" },
+        { a: "About us", name: "aboutUs" },
+        { a: "Download", name: "Download" },
       ],
-    }
+    };
   },
   computed: {},
   watch: {
     $route() {
-      this.isFlag = false
+      this.isFlag = false;
     },
   },
   methods: {
     goHome(item) {
-      let { name } = this.$route
-      if (item == 'Download') {
+      let { name } = this.$route;
+      if (item == "Download") {
         // this.goLink(
         //   `https://static.bitverse.shop/static/package/2ef41a92983a4647a0b727ed58fcaf90.apk`,
         //   '_self'
         // )
         this.errSpringFrame(
-          'Invitation code：P212WA',
-          'Scan code to download APK',
-          '',
-          'pcMa'
-        )
-        return
+          "Invitation code：P212WA",
+          "Scan code to download APK",
+          "",
+          "pcMa"
+        );
+        return;
       }
       if (name != item) {
-        this.$router.push({ name: item })
+        this.$router.push({ name: item });
       }
     },
+
+    goRegister(){
+      this.$router.push('/signup');
+    },
+
+    goLogin(){
+      this.$router.push('/login');
+    }
   },
   created() {},
   mounted() {},
-}
+};
 </script>
 <style scoped lang="scss">
 @media screen and (max-width: 900px) {
@@ -265,5 +276,13 @@ export default {
 }
 .borff {
   border-bottom: 1px solid #ffffff;
+}
+
+.border {
+  width: 88px;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 15px;
+  font-size: 16px;
 }
 </style>
