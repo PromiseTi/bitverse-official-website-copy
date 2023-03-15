@@ -103,6 +103,7 @@ export default {
     async loginVerify() {
       let { authToken } = this;
       let { value1 } = this.form;
+      let that = this
 
       let result = await api.$loginVerify({
         authToken,
@@ -110,12 +111,12 @@ export default {
       });
       console.log(result);
       if (result.errorCode == null) {
-        localStorage.setItem("token", result.data);
+        localStorage.setItem("token", result.data.token);
         this.$message({
           message: "Login Success!",
           type: "success",
         });
-        // this.$router.push("");
+        that.$router.push("/mall");
       } else {
         this.$message({
           message: result.errorMsg,

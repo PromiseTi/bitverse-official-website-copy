@@ -212,7 +212,7 @@ export default {
       let result = await api.$register({
         areaCode: nation,
         account: email,
-        password: md5(pass),
+        password: md5("qwxioixascrwqd" + pass),
         verifyCode: code,
         inviteCode: invitedCode,
       });

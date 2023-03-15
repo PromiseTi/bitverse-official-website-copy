@@ -39,7 +39,33 @@ export default {
     return server.post('/user/login_security', params)
   },
 
+  //获取币种
+  $getCurrency(params) {
+    return server.get('/machine/get_currency_list', params)
+  },
 
+  //获取云算力列表
+  $getList(params) {
+    return server.get('/goods/get_goods_cloud_hash_rate_list', params)
+  },
 
+  //获取云算力详情
+  $getDetail(params) {
+    return server.get('/goods/get_goods_cloud_hash_rate_detail', params)
+  },
 
+  //获取优惠券
+  $getCouponList(params) {
+    return server.get('/account/get_coupons_list', params)
+  },
+
+  //确认订单
+  $confirmOrder(params) {
+    return server.get('/order/confirm_order', params)
+  },
+
+  //生成订单支付
+  $createOrderPayment(params) {
+    return server.post('/order/add_order', params)
+  }
 }

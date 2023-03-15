@@ -76,9 +76,10 @@ const routes = [
     component: () => import('../views/mall/mallDetail.vue'),
   },
   {
-    path: '/pay',
+    path: '/pay:order',
     name: 'pay',
     component: () => import('../views/mall/pay.vue'),
+    props: true
   },
   {
     path: '/payVerify',

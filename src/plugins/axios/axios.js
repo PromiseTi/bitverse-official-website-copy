@@ -9,7 +9,8 @@ Axios.defaults.headers = configs.header
 
 //
 Axios.interceptors.request.use((config) => {
-  // config.headers.token = getToken()
+  // let token = localStorage.getItem('token')
+  config.headers.Authorization = '56c214cd-8892-4fd3-a1b8-6f735efb8c5d'
   return config
 })
 //
@@ -28,4 +29,7 @@ Axios.interceptors.response.use(
     return Promise.reject(err)
   }
 )
+
+
+
 export default Axios

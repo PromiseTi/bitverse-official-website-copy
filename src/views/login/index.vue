@@ -84,7 +84,7 @@ export default {
     async login() {
       let { email, pwd } = this.form;
       let account = email;
-      let password = md5(pwd);
+      let password = md5('qwxioixascrwqd'+pwd);
       let result = await api.$login({ account, password });
       if (result.errorCode == null) {
         if (result.data.authToken != null) {

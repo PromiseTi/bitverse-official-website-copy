@@ -8,33 +8,37 @@
     <div class="flex justify-cetner widCont">
       <div class="tabs">
         <div class="flex cells">
-          <div class="first">产品类型</div>
-          <div class="last">SINSO</div>
+          <div class="first">Product Type</div>
+          <div class="last">{{ detail.currencyName }}</div>
         </div>
         <div class="flex cells">
-          <div class="first">使用周期</div>
-          <div class="last">SINSO</div>
+          <div class="first">Life Cycle</div>
+          <div class="last">{{ detail.lifeCycle }} Days</div>
         </div>
         <div class="flex cells">
-          <div class="first">算力</div>
-          <div class="last">SINSO</div>
+          <div class="first">Compute Speed</div>
+          <div class="last">
+            {{ detail.specification }} {{ detail.hashrateUnit }}
+          </div>
         </div>
         <div class="flex cells">
-          <div class="first">技术服务费</div>
-          <div class="last">SINSO</div>
+          <div class="first">Techniacl Fee</div>
+          <div class="last">{{ detail.beforeServiceFee * 100 }}%</div>
         </div>
         <div class="flex cells">
-          <div class="first">包含质押币</div>
-          <div class="last">SINSO</div>
+          <div class="first">Include pledge coins</div>
+          <div class="last">
+            {{ detail.mortgageAmount }} {{ detail.currencyName }}
+          </div>
         </div>
         <div class="flex cells">
-          <div class="rights">收益发放</div>
-          <div>SINSO</div>
+          <div class="rights">Release income</div>
+          <div>T+1</div>
         </div>
       </div>
       <div class="flex-sub flex flex-direction justify-between">
-        <h2 class="margin-bottom-sm">SINSO节点</h2>
-        <div class="margin-bottom-sm">无技术服务费，免托管</div>
+        <h2 class="margin-bottom-sm">{{ detail.name }}</h2>
+        <div class="margin-bottom-sm">{{ detail.goodsDescribe }}</div>
         <div class="margin-bottom-sm flex align-center fontSize-14">
           <p class="margin-right">支付方式:</p>
 
@@ -42,9 +46,9 @@
           <a class="margin-left-xs">USDT</a>
         </div>
         <div class="margin-bottom-sm flex align-center">
-          <div class="fontSize-20">850.00 USDT</div>
+          <div class="fontSize-20">{{ detail.price }} USDT</div>
           <div class="margin-left-sm text-removeDel fontSize-14">
-            850.00 USDT
+            {{ detail.originalPrice }} USDT
           </div>
         </div>
         <div class="flex align-center margin-bottom-sm agreeOn">
@@ -52,9 +56,23 @@
             v-if="isChoise"
             class="choseImg"
             src="../../assets/img-xuanzhong.png"
+            @click="isChoise = !isChoise"
           />
-          <img v-else class="choseImg" src="../../assets/img-weixuan.png" />
-          <div class="fontSize-14">{{ text }}</div>
+
+          <img
+            v-else
+            class="choseImg"
+            @click="isChoise = !isChoise"
+            src="../../assets/img-weixuan.png"
+          />
+
+          <div
+            class="fontSize-14"
+            v-for="(item, index) in detail.goodsAgreementDetailList"
+            :key="index"
+          >
+            《 {{ item.agreementName }} 》
+          </div>
         </div>
         <div class="flex align-center trans">
           <el-input-number
@@ -72,8 +90,7 @@
     <div class="widCont">
       <div class="lines"></div>
       <div class="fontSize-20 margin-bottom">购买须知</div>
-      <div class="margin-bottom">1购买须知</div>
-      <div class="margin-bottom">2购买须知</div>
+      <div class="margin-bottom" v-html="`${detail.goodsDetail}`"></div>
     </div>
     <el-dialog
       :close-on-click-modal="false"
@@ -83,11 +100,11 @@
       class="coloFFF"
     >
       <div class="margin-bottom-sm margin-top fontBlod fontSize-20">
-        SINSO节点
+        {{ detail.name }}
       </div>
       <div class="margin-bottom-sm flex justify-between">
         <div>Price</div>
-        <div>800.00USDT</div>
+        <div>{{ detail.price }} USDT</div>
       </div>
       <div class="margin-bottom-sm flex justify-between">
         <div>Amount</div>
@@ -105,7 +122,7 @@
       </div>
       <div class="margin-bottom-sm flex justify-between">
         <div>Total</div>
-        <div>800.00USDT</div>
+        <div>{{ detail.price * num }} USDT</div>
       </div>
       <span slot="footer" class="dialog-footer trans">
         <el-button style="width: 200px" @click="doSave">确 定</el-button>
@@ -115,30 +132,102 @@
 </template>
 
 <script>
+import api from "@/api";
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {},
   data() {
     return {
-      isShow: true,
+      id: "",
+      isShow: false,
       isChoise: false,
-      text: '<<sinso 云算力购买协议>>',
+      agreement: "<<sinso 云算力购买协议>>",
       num: 1,
-    }
+      detail: {},
+    };
   },
   computed: {},
   methods: {
     handleChange(value) {
-      console.log(value)
+      console.log(value);
     },
     doSave() {
-      this.$router.push({ name: 'pay' })
+      this.confirmOrder();
+    },
+
+    // 获取详情
+    async getDetail() {
+      let { id } = this;
+      let langId = 2;
+      let result = await api.$getDetail({ id, langId });
+      if (result.errorCode == null) {
+        this.detail = result.data;
+      }
+    },
+
+    // 获取优惠券列表
+    async getCouponList() {
+      //todo 优惠券问题
+      // let params = {
+      //   state: 1, //状态        1未使用 2已使用 3已过期
+      //   // type: 2, //优惠券类型   1矿机 2云算力 3电费
+      //   //currencyId: this.id,
+      //   langId: 2,
+      // };
+      // let result = await api.$getCouponList(params);
+      // console.log(result.data);
+    },
+
+    //确认订单
+    async confirmOrder() {
+      let params = {
+        goodsId: this.id,
+        goodsNum: this.num,
+        goodsType: 2,
+        langId: 2,
+      };
+      let result = await api.$confirmOrder(params);
+      console.log(result.data);
+
+      this.createOrderPayment(result.data);
+    },
+
+    async createOrderPayment(data) {
+      let params = {
+        goodsId: data.goodsId,
+        goodsNum: data.goodsNum,
+        price: data.price,
+        amount: data.amount,
+        goodsName: data.goodsName,
+        payState: 1, //支付类型：1线上支付 2线下支付【必须】",
+        goodsType: 2, //订单类型 1矿机 2云算力 3电费【必须】",
+        currencyName: data.currencyName,
+        currencyId: data.currencyId,
+      };
+      let result = await api.$createOrderPayment(params);
+      if (result.errorCode == null) {
+        this.$router.push({
+          name: "pay",
+          params: { order: JSON.stringify(result.data) },
+        });
+      }else{
+        this.$message({
+          message: result.errorMsg,
+          type: 'warning'
+        })
+      }
     },
   },
-  created() {},
-  mounted() {},
-}
+
+  created() {
+    this.id = this.$route.params.id;
+  },
+  mounted() {
+    this.getDetail();
+    this.getCouponList();
+  },
+};
 </script>
 <style scoped lang="scss">
 .bac {

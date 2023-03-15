@@ -9,23 +9,35 @@
       <img class="banners" src="../../assets/img-banner.png" />
       <div class="contes">
         <div class="flex align-center tope">
-          <img src="../../assets/to1.png" />
-          <img src="../../assets/to2.png" />
-          <img src="../../assets/to3.png" />
+          <img
+            :src="item.icon"
+            v-for="item in currency"
+            :key="item.id"
+            @click="handleClick(item.id)"
+          />
         </div>
         <div class="content">
           <!-- <swiper class="swiper" :options="swiperOption">
           </swiper> -->
           <swiper class="swiper" :options="swiperOption">
-            <swiper-slide v-for="(item, index) in 5" :key="index">
+            <swiper-slide
+              v-for="item in list"
+              :key="item.id"
+              :data-id="item.id"
+            >
               <div class="text-center fontBlod margin-bottom fontSize-20">
-                SINSO节点
+                {{ item.name }}
               </div>
-              <div class="margin-bottom-lg">无技术服务费，免托管</div>
-              <div class="margin-bottom">Cycle 365day</div>
-              <div class="margin-bottom">Calculation speed 1N</div>
-              <div class="margin-bottom text-removeDel">850.00 USDT</div>
-              <div class="margin-bottom fontSize-20">850.00 USDT</div>
+              <div class="margin-bottom-lg">{{ item.goodsDescribe }}</div>
+              <div class="margin-bottom">Cycle {{ item.lifeCycle }}</div>
+              <div class="margin-bottom">
+                Calculation speed {{ item.specification }}
+                {{ item.hashrateUnit }}
+              </div>
+              <div class="margin-bottom text-removeDel">
+                {{ item.originalPrice }} USDT
+              </div>
+              <div class="margin-bottom fontSize-20">{{ item.price }} USDT</div>
             </swiper-slide>
           </swiper>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -37,29 +49,80 @@
 </template>
 
 <script>
+import api from "@/api";
+import Swiper from "swiper";
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {},
   data() {
     return {
+      id: "",
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 40,
         slidesPerGroup: 3,
-
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
       },
-    }
+      currency: [],
+      list: [],
+    };
   },
   computed: {},
-  methods: {},
-  created() {},
-  mounted() {},
-}
+  methods: {
+    // 获取币种
+    async getCurrency() {
+      let result = await api.$getCurrency({ currencyType: 3 });
+      if (result.errorCode == null) {
+        this.currency = result.data;
+        this.getList(result.data[0].id);
+      }
+    },
+
+    //获取列表
+    async getList(id) {
+      let result = await api.$getList({
+        pageNum: 1,
+        pageSize: 10,
+        currencyId: id,
+        langId: 2,
+      });
+      this.list = result.data.content;
+    },
+
+    //点击币
+    handleClick(id) {
+      this.getList(id);
+    },
+
+    //去详情页面
+    goDetail(id) {
+      this.$router.push({ name: "mallDetail", params: { id } });
+    },
+  },
+
+  mounted() {
+    let that = this;
+
+    this.getCurrency();
+
+    this.$nextTick(() => {
+      new Swiper(".swiper", {
+        preventClicksPropagation: false,
+        loop: false,
+        on: {
+          click: function (e) {
+            let id = e.target.dataset.id;
+            that.goDetail(id);
+          },
+        },
+      });
+    });
+  },
+};
 </script>
 <style scoped lang="scss">
 .bac {
