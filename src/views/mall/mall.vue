@@ -100,7 +100,7 @@ export default {
 
     //去详情页面
     goDetail(id) {
-      this.$router.push({ name: "mallDetail", params: { id } });
+      this.$router.push({ name: "mallDetail", query: { id } });
     },
   },
 

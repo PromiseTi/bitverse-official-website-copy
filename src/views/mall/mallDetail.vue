@@ -89,7 +89,7 @@
     </div>
     <div class="widCont">
       <div class="lines"></div>
-      <div class="fontSize-20 margin-bottom">购买须知</div>
+      <div class="fontSize-20 margin-bottom">Pay Explain</div>
       <div class="margin-bottom" v-html="`${detail.goodsDetail}`"></div>
     </div>
     <el-dialog
@@ -133,6 +133,7 @@
 
 <script>
 import api from "@/api";
+
 export default {
   name: "",
   components: {},
@@ -142,7 +143,7 @@ export default {
       id: "",
       isShow: false,
       isChoise: false,
-      agreement: "<<sinso 云算力购买协议>>",
+      agreement: "",
       num: 1,
       detail: {},
     };
@@ -209,19 +210,19 @@ export default {
       if (result.errorCode == null) {
         this.$router.push({
           name: "pay",
-          params: { order: JSON.stringify(result.data) },
+          query: { order: JSON.stringify(result.data) },
         });
-      }else{
+      } else {
         this.$message({
           message: result.errorMsg,
-          type: 'warning'
-        })
+          type: "warning",
+        });
       }
     },
   },
 
   created() {
-    this.id = this.$route.params.id;
+    this.id = this.$route.query.id;
   },
   mounted() {
     this.getDetail();

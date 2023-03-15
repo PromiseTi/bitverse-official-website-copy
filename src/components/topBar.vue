@@ -39,7 +39,9 @@
               </div>
             </div>
 
-            <el-button round type="small" @click="goRegister">Sign up</el-button>
+            <el-button round type="small" @click="goRegister"
+              >Sign up</el-button
+            >
             <el-button round type="small" @click="goLogin">Sign in</el-button>
           </div>
         </div>
@@ -120,6 +122,7 @@ export default {
       ],
       list: [
         { a: "Home", name: "index" },
+        { a: "Mall", name: "mall" },
         { a: "About us", name: "aboutUs" },
         { a: "Download", name: "Download" },
       ],
@@ -152,13 +155,13 @@ export default {
       }
     },
 
-    goRegister(){
-      this.$router.push('/signup');
+    goRegister() {
+      this.$router.push("/signup");
     },
 
-    goLogin(){
-      this.$router.push('/login');
-    }
+    goLogin() {
+      this.$router.push("/login");
+    },
   },
   created() {},
   mounted() {},

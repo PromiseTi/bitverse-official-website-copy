@@ -7,7 +7,7 @@
   <div class="bac">
     <div class="widCont">
       <div class="fonyBlod fontSize-20 margin-bottom-sm">
-        Order Number：{{goods.id}}
+        Order Number：{{ order.id }}
       </div>
       <div class="tabs">
         <div class="flex cells">
@@ -18,17 +18,17 @@
           <div class="last">Total</div>
         </div>
         <div class="flex cells">
-          <div class="rights">{{ goods.goodsName }}</div>
-          <div class="rights">{{ goods.price }} USDT</div>
-          <div class="rights">{{ goods.amount }}</div>
-          <div class="rights">{{ goods.discountAmount }}</div>
-          <div>{{ goods.actualAmount }} USDT</div>
+          <div class="rights">{{ order.goodsName }}</div>
+          <div class="rights">{{ order.price }} USDT</div>
+          <div class="rights">{{ order.goodsNum }}</div>
+          <div class="rights">{{ order.discountAmount }}</div>
+          <div>{{ order.actualAmount }} USDT</div>
         </div>
       </div>
       <div class="lines"></div>
       <div class="fontSize-18 fontBlod">Pay USDT</div>
       <div class="conct">
-        <img src="../../assets/img-contact-pic@2x.png" />
+        <img :src="QRImgUrl" />
       </div>
       <div class="flex align-center margin-bottom">
         <div>Total</div>
@@ -36,7 +36,7 @@
       </div>
       <div class="flex align-center margin-bottom">
         <div>Payment Address</div>
-        <div style="margin-left: 65px">{{ goods.receiveAddress }}</div>
+        <div style="margin-left: 65px">{{ order.receiveAddress }}</div>
       </div>
       <div class="lines"></div>
       <div class="margin-bottom fontSize-20">Payment instructions</div>
@@ -75,31 +75,34 @@
 </template>
 
 <script>
+import QRCode from "qrcode";
 export default {
   name: "",
   components: {},
-  props: ["order"],
+
   data() {
     return {
       isShow: true,
       isChoise: false,
       text: "<<sinso 云算力购买协议>>",
       num: 1,
-      goods: {},
+      QRImgUrl: "",
+      order: {},
     };
   },
   computed: {},
   methods: {
-    handleChange(value) {
-      console.log(value);
-    },
-    doSave() {
-      this.$router.push({ name: "pay" });
+    async getQRCode(url) {
+      let options = {
+        margin: 2,
+      };
+      this.QRImgUrl = await QRCode.toDataURL(url, options);
     },
   },
-  created() {},
   mounted() {
-    this.goods = JSON.parse(this.order);
+    this.order = JSON.parse(this.$route.query.order);
+    this.getQRCode(this.order.receiveAddress);
+    console.log(this.order);
   },
 };
 </script>
